@@ -21,6 +21,18 @@ defmodule HexerssWeb.FeedPlug do
     |> assign(:builder, builder)
   end
 
+  defp fetch_count(conn, _) do
+    count =
+      with %{"count" => count} <- conn.query_params,
+           {count, _} <- Integer.parse(count) do
+        count
+      else
+        _ -> 20
+      end
+
+    assign(conn, :count, count)
+  end
+
   defp fetch_packages(conn, _) do
     case conn.params["packages"] do
       nil ->
@@ -41,24 +53,12 @@ defmodule HexerssWeb.FeedPlug do
     end
   end
 
-  defp fetch_count(conn, _) do
-    count =
-      with %{"count" => count} <- conn.query_params,
-           {count, _} <- Integer.parse(count) do
-        count
-      else
-        _ -> 20
-      end
-
-    assign(conn, :count, count)
-  end
-
   defp send_feed(conn, _) do
-    %{builder: builder, feed: feed, count: count} = conn.assigns
+    %{builder: builder, feed: feed} = conn.assigns
 
     conn
     |> put_resp_header("content-type", builder.content_type)
-    |> send_resp(200, builder.build_feed(feed, count: count))
+    |> send_resp(200, builder.build_feed(feed))
   end
 
   defp empty_feed(conn) do

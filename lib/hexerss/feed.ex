@@ -14,7 +14,13 @@ defmodule Hexerss.Feed do
   @callback build_feed(Feed.t()) :: iodata()
 
   @spec build([String.t()], ([String.t()] -> String.t())) :: {:ok, t} | {:error, :empty_feed}
-  def build(package_list, link_fun) when is_function(link_fun, 1) do
+  def build(package_list, link_fun, opts \\ []) when is_function(link_fun, 1) do
+    count =
+      opts
+      |> Keyword.get(:count, 20)
+      |> min(50)
+      |> max(5)
+
     stream =
       Task.async_stream(package_list, &Hexpm.fetch_package/1, timeout: 30_000, on_timeout: :exit)
 
@@ -28,7 +34,7 @@ defmodule Hexerss.Feed do
          title: title(packages),
          link: link_fun.(Enum.map(packages, & &1.name)),
          description: description(packages),
-         items: build_items(packages)
+         items: build_items(packages, count)
        }}
     end
   end
@@ -36,13 +42,7 @@ defmodule Hexerss.Feed do
   def extract_package({:ok, {:ok, package}}), do: package
   def extract_package(_), do: nil
 
-  defp build_items(packages, opts \\ []) do
-    count =
-      opts
-      |> Keyword.get(:count, 20)
-      |> min(50)
-      |> max(5)
-
+  defp build_items(packages, count) do
     map = Map.new(packages, &{&1.name, &1})
 
     items =

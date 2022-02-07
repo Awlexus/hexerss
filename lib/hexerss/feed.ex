@@ -36,7 +36,13 @@ defmodule Hexerss.Feed do
   def extract_package({:ok, {:ok, package}}), do: package
   def extract_package(_), do: nil
 
-  defp build_items(packages) do
+  defp build_items(packages, opts \\ []) do
+    count =
+      opts
+      |> Keyword.get(:count, 20)
+      |> min(50)
+      |> max(5)
+
     map = Map.new(packages, &{&1.name, &1})
 
     items =
@@ -52,7 +58,7 @@ defmodule Hexerss.Feed do
 
     items
     |> Enum.sort_by(& &1.timestamp, :desc)
-    |> Enum.take(20)
+    |> Enum.take(count)
     |> Enum.map(&Item.build(map[&1.package], &1))
   end
 

@@ -24,7 +24,8 @@ defmodule Hexerss.MixProject do
       {:tesla, "~> 1.4"},
       {:hackney, "~> 1.18"},
       {:con_cache, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:exsync, "~> 0.2", only: :dev}
     ]
   end
 end

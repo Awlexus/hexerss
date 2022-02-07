@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hexerss - Overview</title>
+</head>
+
+<body>
+    <h1>A simple rss feed for your favourite erlang/elixir packages</h1>
+    <p>Hexerss tries to offer a simple and minimalistic rss/atom feed for packages you are interested in.</p>
+    <h2>How to use this feed</h2>
+    <p>The feed can be accessed at <code>/feed.</code> <a href="/feed?packages=phoenix,ecto">Example feed</a> </p>
+    <h3>Parameters</h3>
+    Currently this feed supports the following query parameters
+    <ul>
+        <li><b>type</b> - Determines the type of feed you want to receive. Supported values are <code>rss2</code> and
+            <code>atom</code>
+        </li>
+        <li><b>packages</b> - A comma separated list of all the you want to monitor</li>
+        <li><b>count</b> - How many items/entries should be loaded. Defaults to 20, max is 50</li>
+    </ul>
+</body>
+
+</html>

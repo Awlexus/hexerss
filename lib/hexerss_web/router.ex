@@ -1,10 +1,20 @@
 defmodule HexerssWeb.Router do
   use Plug.Router
 
+  @index_html __DIR__ <> "/index.html"
+  @external_resource @index_html
+  @index_html File.read!(@index_html)
+
   plug :match
   plug :dispatch
 
   forward "/feed", to: HexerssWeb.FeedPlug
+
+  get "/" do
+    conn
+    |> put_resp_header("content-type", "text/html; charset=utf-8")
+    |> send_resp(200, @index_html)
+  end
 
   match _ do
     conn

@@ -1,7 +1,7 @@
 defmodule HexerssWeb.Router do
   use Plug.Router
 
-  @index_html __DIR__ <> "/index.html"
+  @index_html "priv/static/index.html"
   @external_resource @index_html
   @index_html File.read!(@index_html)
 

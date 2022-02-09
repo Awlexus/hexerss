@@ -12,7 +12,7 @@ defmodule Hexerss.Feed.Item do
 
   def build(package, release) do
     %__MODULE__{
-      name: package.name,
+      name: "#{package.name} v#{release.version}",
       link: build_link(package, release),
       description: package.description,
       version: release.version,

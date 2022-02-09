@@ -5,6 +5,7 @@ defmodule HexerssWeb.Router do
   @external_resource @index_html
   @index_html File.read!(@index_html)
 
+  plug ETag.Plug
   plug :match
   plug :dispatch
 

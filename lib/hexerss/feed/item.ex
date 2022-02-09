@@ -24,7 +24,7 @@ defmodule Hexerss.Feed.Item do
   defp build_link(package, release) do
     case Enum.at(package.releases, release.local_index + 1) do
       nil -> "https://hex.pm/packages/#{package.name}"
-      prev -> "https://diff.hex.pm/diff/phoenix_live_reload/#{prev.version}..#{release.version}"
+      prev -> "https://diff.hex.pm/diff/#{package.name}/#{prev.version}..#{release.version}"
     end
   end
 end

@@ -47,12 +47,13 @@ defmodule Hexerss.Feed do
 
     items =
       for package <- packages,
-          release <- package.releases do
+          {release, index} <- Enum.with_index(package.releases) do
         %{
           package: package.name,
           docs: release.docs,
           version: release.version,
-          timestamp: release.inserted_at
+          timestamp: release.inserted_at,
+          local_index: index
         }
       end
 

@@ -13,11 +13,18 @@ defmodule Hexerss.Feed.Item do
   def build(package, release) do
     %__MODULE__{
       name: package.name,
-      link: "https://hex.pm/packages/#{package.name}",
+      link: build_link(package, release),
       description: package.description,
       version: release.version,
       timestamp: release.timestamp,
       authors: package.authors
     }
+  end
+
+  defp build_link(package, release) do
+    case Enum.at(package.releases, release.local_index + 1) do
+      nil -> "https://hex.pm/packages/#{package.name}"
+      prev -> "https://diff.hex.pm/diff/phoenix_live_reload/#{prev.version}..#{release.version}"
+    end
   end
 end

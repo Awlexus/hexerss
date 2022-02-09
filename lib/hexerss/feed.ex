@@ -63,8 +63,18 @@ defmodule Hexerss.Feed do
     |> Enum.map(&Item.build(map[&1.package], &1))
   end
 
-  defp title([package]), do: "Package releases of #{package.name}"
-  defp title(_packages), do: "Custom feed"
+  defp title([package]), do: "Hexpm package releases of #{package.name}"
+
+  defp title(packages) when length(packages) < 4 do
+    package_names =
+      packages
+      |> Enum.map(& &1.name)
+      |> humanized_join()
+
+    "Hexpm package releases for " <> package_names
+  end
+
+  defp title(_packages), do: "Hexpm package releases several pacakges"
 
   defp description([package]), do: package.description
 

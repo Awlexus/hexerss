@@ -8,11 +8,42 @@
     <title>Hexerss - Overview</title>
 </head>
 <style>
-    .disable-select {
+    .code-block {
+        padding: 1rem;
+        border-left: 0.25rem solid red;
+        background-color: lightgray;
+        display: flex;
+        max-width: fit-content;
+        align-items: center;
+        font-size: 16px;
+    }
+
+    .code-block .prompt {
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
+
+    .copy-button {
+        border-radius: 0.25rem;
+        border: 0.125rem solid darkgray;
+        padding: 0.5rem 0.75rem;
+        margin-left: 0.25rem;
+        cursor: pointer;
+        background-color: lightgray;
+        visibility: hidden;
+    }
+
+    .code-block:hover .copy-button {
+        visibility: visible;
+    }
+
+    .copy-button:hover {
+        border-color: dimgray;
+        background-color: darkgray;
     }
 </style>
 
@@ -33,7 +64,27 @@
     <p><a href="https://github.com/Awlexus/hexerss">Check out the code on github</a></p>
     <p><b>Hint:</b> The output of this service is not formatted. If you want to see formated output, you can do so like
         this</p>
-    <pre><b class="disable-select">$ </b><code>curl https://hexerss.fly.dev/feed?packages=phoenix,ecto | xmllint --format -</code></pre>
+    <div class="code-block">
+        <code class="prompt">$ </code>
+        <code class="code">curl https://hexerss.fly.dev/feed?packages=phoenix,ecto | xmllint --format -</code>
+        <span class="copy-button" onclick="copyCode(event)">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 488.3 488.3"
+                width="16px" height="16px">
+                <path
+                    d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z" />
+                <path
+                    d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z" />
+            </svg>
+        </span>
+    </div>
+
 </body>
+
+<script>
+    function copyCode(e) {
+        const code = e.target.parentElement.getElementsByClassName("code")[0].innerHTML;
+        navigator.clipboard.writeText(code);
+    }
+</script>
 
 </html>
